@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medicine Management Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e3f2fd;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #1565c0;
+            margin: 0;
+        }
+
+        .cards {
+            display: flex;
+            gap: 20px;
+            max-width: 1000px;
+            margin: auto;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background-color: white;
+            flex: 1;
+            min-width: 200px;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: #1565c0;
+            font-size: 30px;
+            margin: 10px;
+        }
+
+        .card p {
+            color: #555;
+            font-size: 16px;
+        }
+
+        .table-box {
+            background-color: white;
+            max-width: 1000px;
+            margin: 25px auto;
+            padding: 20px;
+            border-radius: 15px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #bbdefb;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>🏭 Medicine Management Dashboard</h1>
+    <p>Smart Medicine Patient Access Monitoring</p>
+</div>
+
+<div class="cards">
+
+    <div class="card">
+        <h2 id="totalAccess">0</h2>
+        <p>Total Patient Access</p>
+    </div>
+
+    <div class="card">
+        <h2 id="todayAccess">0</h2>
+        <p>Today's Access</p>
+    </div>
+
+    <div class="card">
+        <h2 id="medicineId">MED001</h2>
+        <p>Medicine ID</p>
+    </div>
+
+</div>
+
+<div class="table-box">
+
+    <h2>📋 Patient Access Records</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Medicine ID</th>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+
+        <tbody id="patientTable">
+            <tr>
+                <td colspan="6">No records loaded yet.</td>
+            </tr>
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>
