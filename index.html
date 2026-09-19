@@ -1,12 +1,115 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Smart Medicine Information System</title>
+<title>Smart Medicine Information System</title>
+
+<style>
+body  {
+    background-image: url("medicine-bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    color: #222;
+    min-height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+.medicine-card {
+    background-color: white;
+    max-width: 700px;
+    margin: auto;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+.medicine-card p {
+    padding: 10px;
+    margin: 5px 0;
+    border-bottom: 1px solid #e0e0e0;
+    line-height: 1.6;
+}
+
+.login-box {
+    background-color: white;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    text-align: center;
+}
+
+.login-box input {
+    width: 90%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.login-box button {
+    padding: 12px 30px;
+    margin-top: 15px;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.medicine-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    display: block;
+    margin: 0 auto 20px;
+    border-radius: 12px;
+}
+</style>   
 </head>
 
-<body>
+<body>  
 
-<h1>SMART MEDICINE INFORMATION SYSTEM</h1>
+<div class="login-box" id="loginBox">
+    <h2>Welcome</h2>
+    <p>Please enter your details to view medicine information.</p>
+
+    <input type="text" id="name" placeholder="Enter your name">
+
+    <input type="email" id="email" placeholder="Enter your email">
+
+    <input type="number" id="age" placeholder="Enter your age">
+
+
+<button type="button" onclick="showMedicine()">Continue</button>
+
+</div>
+
+<div id="medicineInfo" style="display: none;">
+
+ <button type="button" onclick="startScanner()">📷 Scan Medicine</button>
+ 
+ <div id="scanner" style="display: none;">
+    <video id="camera" width="300" height="300" autoplay></video>
+    <p>Point your phone camera at the medicine QR/barcode.</p>
+    <button type="button" onclick="stopScanner()">Stop Scanner</button>
+</div>
+
+<h1>💊 Smart Medicine Information</h1>
+
+<div class="medicine-card">    
+
+   
 
 <p><b>Medicine Name:</b> Paracetamol 500 mg</p>
 
@@ -40,5 +143,45 @@
 
 <p><b>CDSCO Approval:</b> Approved</p>
 
+</div>
+
+<script>
+
+function showMedicine() {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("medicineInfo").style.display = "block";
+}
+</script>
+
+<script>
+function startScanner() {
+    const scanner = document.getElementById("scanner");
+    const camera = document.getElementById("camera");
+
+    scanner.style.display = "block";
+
+    navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "environment" }
+    })
+    .then(function(stream) {
+        camera.srcObject = stream;
+    })
+    .catch(function(error) {
+        alert("Camera access was denied or is not available.");
+        console.log(error);
+    });
+}
+
+function stopScanner() {
+    const camera = document.getElementById("camera");
+
+    if (camera.srcObject) {
+        camera.srcObject.getTracks().forEach(track => track.stop());
+        camera.srcObject = null;
+    }
+
+    document.getElementById("scanner").style.display = "none";
+}
+</script>
 </body>
 </html>
