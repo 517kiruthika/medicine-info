@@ -92,7 +92,6 @@ h1 {
 
 
 <button type="button" onclick="showMedicine()">Continue</button>
-
 </div>
 
 <div id="medicineInfo" style="display: none;">
@@ -148,6 +147,39 @@ h1 {
 <script>
 
 function showMedicine() {
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const age = document.getElementById("age").value.trim();
+
+    if (name === "" || email === "" || age === "") {
+        alert("Please enter your Name, Email and Age.");
+        return;
+    }
+
+    if (!document.getElementById("email").checkValidity()) {
+        alert("Please enter a valid Email ID.");
+        return;
+    }
+
+    fetch("https://script.google.com/macros/s/AKfycbxy6kbk7geIXnon3vgKnI2JcfKZ9pl4r0vq69tfQL25XyJvjyZPvnv8qonQY47W8s1vIw/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify({
+            name: name,
+            email: email,
+            age: age,
+            medicineId: "MED001",
+            productName: "Paracetamol 500 mg",
+            batchNo: "PT240501",
+            location: "Tamil Nadu",
+            platform: navigator.userAgent
+        })
+    });
+
     document.getElementById("loginBox").style.display = "none";
     document.getElementById("medicineInfo").style.display = "block";
 }
