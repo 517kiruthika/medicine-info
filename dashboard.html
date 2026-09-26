@@ -171,17 +171,89 @@ fetch(WEB_APP_URL)
 
         const rows = data.slice(1);
 
+        const dailyCounts = {};
+
+        rows.forEach(row => {
+
+            const dateValue = row[4];
+
+            if (!dateValue) return;
+
+            const date = new Date(dateValue);
+
+            if (isNaN(date)) return;
+
+            const day = date.toLocaleDateString("en-IN");
+
+            if (!dailyCounts[day]) {
+                dailyCounts[day] = 0;
+            }
+
+            dailyCounts[day]++;
+        });
+
+        const dates = Object.keys(dailyCounts);
+        const counts = Object.values(dailyCounts);
+
+        const total = rows.length;
+
         new Chart(document.getElementById("scanChart"), {
             type: "bar",
+
             data: {
-                labels: ["Patient Access"],
+                labels: dates,
+
                 datasets: [{
                     label: "Number of Patients",
-                    data: [rows.length]
+                    data: counts
                 }]
+            },
+
+            options: {
+                responsive: true,
+
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: "Number of Patients"
+                        },
+                        ticks: {
+                            stepSize: 1
+                        }
+                    },
+
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Date"
+                        }
+                    }
+                },
+
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+
+                                const count = context.raw;
+
+                                const percentage = total > 0
+                                    ? ((count / total) * 100).toFixed(1)
+                                    : 0;
+
+                                return count + " patients (" + percentage + "%)";
+                            }
+                        }
+                    }
+                }
             }
         });
 
+    })
+    .catch(error => {
+        console.log("Graph error:", error);
     });
 </script>
 
