@@ -165,18 +165,24 @@ fetch(WEB_APP_URL)
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-const chartCanvas = document.getElementById("scanChart");
+fetch(WEB_APP_URL)
+    .then(response => response.json())
+    .then(data => {
 
-new Chart(chartCanvas, {
-    type: "bar",
-    data: {
-        labels: ["Patient Access"],
-        datasets: [{
-            label: "Number of Patients",
-            data: [document.getElementById("totalAccess").textContent]
-        }]
-    }
-});
+        const rows = data.slice(1);
+
+        new Chart(document.getElementById("scanChart"), {
+            type: "bar",
+            data: {
+                labels: ["Patient Access"],
+                datasets: [{
+                    label: "Number of Patients",
+                    data: [rows.length]
+                }]
+            }
+        });
+
+    });
 </script>
 
 </body>
