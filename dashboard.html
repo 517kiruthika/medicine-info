@@ -131,5 +131,54 @@
 
 </div>
 
+<script>
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxy6kbk7geIXnon3vgKnI2JcfKZ9pl4r0vq69tfQL25XyJvjyZPvnv8qonQY47W8s1vIw/exec";
+
+fetch(WEB_APP_URL)
+    .then(response => response.json())
+    .then(data => {
+        const rows = data.slice(1);
+
+        document.getElementById("totalAccess").textContent = rows.length;
+
+        document.getElementById("patientTable").innerHTML = rows.map(row => `
+            <tr>
+                <td>${row[0]}</td>
+                <td>${row[1]}</td>
+                <td>${row[2]}</td>
+                <td>${row[3]}</td>
+                <td>${row[4]}</td>
+                <td>${row[5]}</td>
+            </tr>
+        `).join("");
+    })
+    .catch(error => {
+        console.log("Dashboard error:", error);
+    });
+</script>
+
+<div class="table-box">
+    <h2>📊 Patient Access Trend</h2>
+    <canvas id="scanChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const chartCanvas = document.getElementById("scanChart");
+
+new Chart(chartCanvas, {
+    type: "bar",
+    data: {
+        labels: ["Patient Access"],
+        datasets: [{
+            label: "Number of Patients",
+            data: [document.getElementById("totalAccess").textContent]
+        }]
+    }
+});
+</script>
+
 </body>
 </html>
+
